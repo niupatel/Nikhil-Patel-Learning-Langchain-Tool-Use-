@@ -1,0 +1,742 @@
+Core components
+ are powerful AI tools that can interpret and generate text like humans. Theyʼre
+versatile enough to write content, translate languages, summarize, and answer questions
+without needing specialized training for each task.
+In addition to text generation, many models support:
+Models are the reasoning engine of . They drive the agentʼs decision-making
+process, determining which tools to call, how to interpret results, and when to provide a
+final answer.
+The quality and capabilities of the model you choose directly impact your agentʼs
+baseline reliability and performance. Different models excel at different tasks - some are
+better at following complex instructions, others at structured reasoning, and some
+support larger context windows for handling more information.
+LangChainʼs standard model interfaces give you access to many different provider
+integrations, which makes it easy to experiment with and switch between models to find
+the best fit for your use case.
+ - calling external tools (like databases queries or API calls) and use
+results in their responses.
+ - where the modelʼs response is constrained to follow a defined
+format.
+ - process and return data other than text, such as images, audio,
+and video.
+ - models perform multi-step reasoning to arrive at a conclusion.
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+1 of 55 1/20/2026, 2:58 PM
+For provider-specific integration information and capabilities, see the providerʼs 
+.
+Models can be utilized in two ways:
+���  - Models can be dynamically specified when creating an .
+���  - Models can be called directly (outside of the agent loop) for tasks like
+text generation, classification, or extraction without the need for an agent
+framework.
+The same model interface works in both contexts, which gives you the flexibility to start
+simple and scale up to more complex agent-based workflows as needed.
+The easiest way to get started with a standalone model in LangChain is to use
+ to initialize one from a  of your choice (examples
+below):
+ Read the 
+npm install @langchain/openai
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+2 of 55 1/20/2026, 2:58 PM
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+3 of 55 1/20/2026, 2:58 PM
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+4 of 55 1/20/2026, 2:58 PM
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+5 of 55 1/20/2026, 2:58 PM
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+6 of 55 1/20/2026, 2:58 PM
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+7 of 55 1/20/2026, 2:58 PM
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+8 of 55 1/20/2026, 2:58 PM
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+9 of 55 1/20/2026, 2:58 PM
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+10 of 55 1/20/2026, 2:58 PM
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+11 of 55 1/20/2026, 2:58 PM
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+12 of 55 1/20/2026, 2:58 PM
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+13 of 55 1/20/2026, 2:58 PM
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+14 of 55 1/20/2026, 2:58 PM
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+15 of 55 1/20/2026, 2:58 PM
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+16 of 55 1/20/2026, 2:58 PM
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+17 of 55 1/20/2026, 2:58 PM
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+18 of 55 1/20/2026, 2:58 PM
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+19 of 55 1/20/2026, 2:58 PM
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+20 of 55 1/20/2026, 2:58 PM
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+21 of 55 1/20/2026, 2:58 PM
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+22 of 55 1/20/2026, 2:58 PM
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+23 of 55 1/20/2026, 2:58 PM
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+24 of 55 1/20/2026, 2:58 PM
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+25 of 55 1/20/2026, 2:58 PM
+import { initChatModel } from "langchain";
+process.env.OPENAI_API_KEY = "your-api-key";
+const model = await initChatModel("gpt-4.1");
+See  for more detail, including information on how to pass model
+.
+LangChain supports all major model providers, including OpenAI, Anthropic, Google,
+Azure, AWS Bedrock, and more. Each provider offers a variety of models with different
+capabilities. For a full list of supported models in LangChain, see the .
+In addition to chat models, LangChain provides support for other adjacent technologies,
+such as embedding models and vector stores. See the  for details.
+A chat model takes parameters that can be used to configure its behavior. The full set of
+supported parameters varies by model and provider, but standard ones include:
+The model takes messages as input and outputs messages after generating a
+complete response.
+Invoke the model, but stream the output as it is generated in real-time.
+Send multiple requests to a model in a batch for more efficient processing.
+const response = await model.invoke("Why do parrots talk?");
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+26 of 55 1/20/2026, 2:58 PM
+The name or identifier of the specific model you want to use with a provider. You can also specify both
+the model and its provider in a single argument using the ʼ:ʼ format, for example, ‘openai:o1ʼ.
+The key required for authenticating with the modelʼs provider. This is usually issued when you sign up
+for access to the model. Often accessed by setting an environment variable.
+Controls the randomness of the modelʼs output. A higher number makes responses more creative;
+lower ones make them more deterministic.
+Limits the total number of tokens in the response, effectively controlling how long the output can be.
+The maximum time (in seconds) to wait for a response from the model before canceling the request.
+The maximum number of attempts the system will make to resend a request if it fails due to issues like
+network timeouts or rate limits.
+Using , pass these parameters as inline parameters:
+const model = await initChatModel(
+    "claude-sonnet-4-5-20250929",
+    { temperature: 0.7, timeout: 30, max_tokens: 1000 }
+)
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+27 of 55 1/20/2026, 2:58 PM
+Each chat model integration may have additional params used to control provider-specific
+functionality.
+For example,  has  to dictate whether to use the OpenAI
+Responses or Completions API.
+To find all the parameters supported by a given chat model, head to the 
+ page.
+A chat model must be invoked to generate an output. There are three primary invocation
+methods, each suited to different use cases.
+The most straightforward way to call a model is to use  with a single message or
+a list of messages.
+A list of messages can be provided to a chat model to represent conversation history.
+Each message has a role that models use to indicate who sent the message in the
+conversation.
+See the  guide for more detail on roles, types, and content.
+const response = await model.invoke("Why do parrots have colorful feathers?");
+console.log(response);
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+28 of 55 1/20/2026, 2:58 PM
+If the return type of your invocation is a string, ensure that you are using a chat model as
+opposed to a LLM. Legacy, text-completion LLMs return strings directly. LangChain chat
+models are prefixed with “Chat”, e.g., (/oss/integrations/chat/openai).
+Most models can stream their output content while it is being generated. By displaying
+output progressively, streaming significantly improves user experience, particularly for
+longer responses.
+const conversation = [
+  { role: "system", content: "You are a helpful assistant that translates English to French."
+  { role: "user", content: "Translate: I love programming." },
+  { role: "assistant", content: "J'adore la programmation." },
+  { role: "user", content: "Translate: I love building applications." },
+];
+const response = await model.invoke(conversation);
+console.log(response);  // AIMessage("J'adore créer des applications.")
+import { HumanMessage, AIMessage, SystemMessage } from "langchain";
+const conversation = [
+  new SystemMessage("You are a helpful assistant that translates English to French."
+  new HumanMessage("Translate: I love programming."),
+  new AIMessage("J'adore la programmation."),
+  new HumanMessage("Translate: I love building applications."),
+];
+const response = await model.invoke(conversation);
+console.log(response);  // AIMessage("J'adore créer des applications.")
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+29 of 55 1/20/2026, 2:58 PM
+Calling  returns an iterator that yields output chunks as they are produced. You
+can use a loop to process each chunk in real-time:
+As opposed to , which returns a single  after the model has finished
+generating its full response,  returns multiple  objects, each
+containing a portion of the output text. Importantly, each chunk in a stream is designed to
+be gathered into a full message via summation:
+The resulting message can be treated the same as a message that was generated with
+ – for example, it can be aggregated into a message history and passed back to
+the model as conversational context.
+const stream = await model.stream("Why do parrots have colorful feathers?");
+for await (const chunk of stream) {
+  console.log(chunk.text)
+}
+let full: AIMessageChunk | null = null;
+for await (const chunk of stream) {
+  full = full ? full.concat(chunk) : chunk;
+  console.log(full.text);
+}
+// The
+// The sky
+// The sky is
+// The sky is typically
+// The sky is typically blue
+// ...
+console.log(full.contentBlocks);
+// [{"type": "text", "text": "The sky is typically blue..."}]
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+30 of 55 1/20/2026, 2:58 PM
+Streaming only works if all steps in the program know how to process a stream of chunks.
+For instance, an application that isnʼt streaming-capable would be one that needs to store
+the entire output in memory before it can be processed.
+LangChain chat models can also stream semantic events using
+[ ��BaseChatModel.streamEvents].
+This simplifies filtering based on event types and other metadata, and will
+aggregate the full message in the background. See below for an example.
+const stream = await model.streamEvents("Hello");
+for await (const event of stream) {
+    if (event.event === "on_chat_model_start") {
+        console.log(`Input: ${event.data.input}`);
+    }
+    if (event.event === "on_chat_model_stream") {
+        console.log(`Token: ${event.data.chunk.text}`);
+    }
+    if (event.event === "on_chat_model_end") {
+        console.log(`Full message: ${event.data.output.text}`);
+    }
+}
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+31 of 55 1/20/2026, 2:58 PM
+See the  reference for event types and other details.
+LangChain simplifies streaming from chat models by automatically enabling
+streaming mode in certain cases, even when youʼre not explicitly calling the
+streaming methods. This is particularly useful when you use the non-
+streaming invoke method but still want to stream the entire application,
+including intermediate results from the chat model.
+In , for example, you can call  within
+nodes, but LangChain will automatically delegate to streaming if running in a
+streaming mode.
+When you  a chat model, LangChain will automatically switch to
+an internal streaming mode if it detects that you are trying to stream the
+overall application. The result of the invocation will be the same as far as the
+code that was using invoke is concerned; however, while the chat model is
+being streamed, LangChain will take care of invoking 
+events in LangChainʼs callback system.
+Callback events allow LangGraph  and  to
+Input: Hello
+Token: Hi
+Token:  there
+Token: !
+Token:  How
+Token:  can
+Token:  I
+...
+Full message: Hi there! How can I help today?
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+32 of 55 1/20/2026, 2:58 PM
+surface the chat modelʼs output in real-time.
+Batching a collection of independent requests to a model can significantly improve
+performance and reduce costs, as the processing can be done in parallel:
+const responses = await model.batch([
+  "Why do parrots have colorful feathers?",
+  "How do airplanes fly?",
+  "What is quantum computing?",
+  "Why do parrots have colorful feathers?",
+  "How do airplanes fly?",
+  "What is quantum computing?",
+]);
+for (const response of responses) {
+  console.log(response);
+}
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+33 of 55 1/20/2026, 2:58 PM
+When processing a large number of inputs using , you may want to control the
+maximum number of parallel calls. This can be done by setting the 
+attribute in the  dictionary.
+See the  reference for a full list of supported attributes.
+For more details on batching, see the .
+Models can request to call tools that perform tasks such as fetching data from a
+database, searching the web, or running code. Tools are pairings of:
+��� A schema, including the name of the tool, a description, and/or argument definitions
+(often a JSON schema)
+��� A function or coroutine to execute.
+You may hear the term “function calling”. We use this interchangeably with “tool calling”.
+Hereʼs the basic tool calling flow between a user and a model:
+model.batch(
+  listOfInputs,
+  {
+    maxConcurrency: 5,  // Limit to 5 parallel calls
+  }
+)
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+34 of 55 1/20/2026, 2:58 PM
+To make tools that you have defined available for use by a model, you must bind them
+using . In subsequent invocations, the model can choose to call any of the
+bound tools as needed.
+Some model providers offer built-in tools that can be enabled via model or invocation
+parameters (e.g. , ). Check the respective 
+for details.
+See the  for details and other options for creating tools.
+ToolsModelUser
+ToolsModelUser
+par �Parallel Tool Calls]
+par �Tool Execution]
+"What's the weather in SF and NYC?"
+Analyze request & decide tools needed
+getWeather("San Francisco")
+getWeather("New York")
+SF weather data
+NYC weather data
+Process results & generate response
+"SF� 72°F sunny, NYC� 68°F cloudy"
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+35 of 55 1/20/2026, 2:58 PM
+When binding user-defined tools, the modelʼs response includes a  to execute a
+tool. When using a model separately from an , it is up to you to execute the
+requested tool and return the result back to the model for use in subsequent reasoning.
+When using an , the agent loop will handle the tool execution loop for you.
+Below, we show some common ways you can use tool calling.
+import { tool } from "langchain";
+import * as z from "zod";
+import { ChatOpenAI } from "@langchain/openai";
+const getWeather = tool(
+  (input) => `It's sunny in ${input.location}.`,
+  {
+    name: "get_weather",
+    description: "Get the weather at a location.",
+    schema: z.object({
+      location: z.string().describe("The location to get the weather for"),
+    }),
+  },
+);
+const model = new ChatOpenAI({ model: "gpt-4o" });
+const response = await modelWithTools.invoke("What's the weather like in Boston?"
+const toolCalls = response.tool_calls || [];
+for (const tool_call of toolCalls) {
+  // View tool calls made by the model
+  console.log(`Tool: ${tool_call.name}`);
+  console.log(`Args: ${tool_call.args}`);
+}
+const modelWithTools = model.bindTools([getWeather]);  
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+36 of 55 1/20/2026, 2:58 PM
+When a model returns tool calls, you need to execute the tools and pass the results
+back to the model. This creates a conversation loop where the model can use tool
+results to generate its final response. LangChain includes  abstractions that
+handle this orchestration for you.
+Hereʼs a simple example of how to do this:
+Each  returned by the tool includes a  that matches the
+original tool call, helping the model correlate results with requests.
+By default, the model has the freedom to choose which bound tool to use based on
+the userʼs input. However, you might want to force choosing a tool, ensuring the
+model uses either a particular tool or  tool from a given list:
+// Bind (potentially multiple) tools to the model
+const modelWithTools = model.bindTools([get_weather])
+// Step 1: Model generates tool calls
+const messages = [{"role": "user", "content": "What's the weather in Boston?"
+const ai_msg = await modelWithTools.invoke(messages)
+messages.push(ai_msg)
+// Step 2: Execute tools and collect results
+for (const tool_call of ai_msg.tool_calls) {
+    // Execute the tool with the generated arguments
+    const tool_result = await get_weather.invoke(tool_call)
+    messages.push(tool_result)
+}
+// Step 3: Pass results back to model for final response
+const final_response = await modelWithTools.invoke(messages)
+console.log(final_response.text)
+// "The current weather in Boston is 72°F and sunny."
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+37 of 55 1/20/2026, 2:58 PM
+Many models support calling multiple tools in parallel when appropriate. This
+allows the model to gather information from different sources simultaneously.
+const modelWithTools = model.bindTools([tool_1], { toolChoice: "any" })
+const modelWithTools = model.bind_tools([get_weather])
+const response = await modelWithTools.invoke(
+    "What's the weather in Boston and Tokyo?"
+)
+// The model may generate multiple tool calls
+console.log(response.tool_calls)
+// [
+//   { name: 'get_weather', args: { location: 'Boston' }, id: 'call_1' },
+//   { name: 'get_time', args: { location: 'Tokyo' }, id: 'call_2' }
+// ]
+// Execute all tools (can be done in parallel with async)
+const results = []
+for (const tool_call of response.tool_calls || []) {
+    if (tool_call.name === 'get_weather') {
+        const result = await get_weather.invoke(tool_call)
+        results.push(result)
+    }
+}
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+38 of 55 1/20/2026, 2:58 PM
+The model intelligently determines when parallel execution is appropriate based on
+the independence of the requested operations.
+Most models supporting tool calling enable parallel tool calls by default. Some
+(including  and ) allow you to disable this feature. To do this, set
+:
+When streaming responses, tool calls are progressively built through
+. This allows you to see tool calls as theyʼre being generated rather
+than waiting for the complete response.
+model.bind_tools([get_weather], parallel_tool_calls=False)
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+39 of 55 1/20/2026, 2:58 PM
+You can accumulate chunks to build complete tool calls:
+const stream = await modelWithTools.stream(
+    "What's the weather in Boston and Tokyo?"
+)
+for await (const chunk of stream) {
+    // Tool call chunks arrive progressively
+    if (chunk.tool_call_chunks) {
+        for (const tool_chunk of chunk.tool_call_chunks) {
+        console.log(`Tool: ${tool_chunk.get('name', '')}`)
+        console.log(`Args: ${tool_chunk.get('args', '')}`)
+        }
+    }
+}
+// Output:
+// Tool: get_weather
+// Args:
+// Tool:
+// Args: {"loc
+// Tool:
+// Args: ation": "BOS"}
+// Tool: get_time
+// Args:
+// Tool:
+// Args: {"timezone": "Tokyo"}
+let full: AIMessageChunk | null = null
+const stream = await modelWithTools.stream("What's the weather in Boston?"
+for await (const chunk of stream) {
+    full = full ? full.concat(chunk) : chunk
+    console.log(full.contentBlocks)
+}
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+40 of 55 1/20/2026, 2:58 PM
+Models can be requested to provide their response in a format matching a given schema.
+This is useful for ensuring the output can be easily parsed and used in subsequent
+processing. LangChain supports multiple schema types and methods for enforcing
+structured output.
+To learn about structured output, see .
+A  is the preferred method of defining an output schema. Note that when a
+zod schema is provided, the model output will also be validated against the schema using
+zodʼs parse methods.
+import * as z from "zod";
+const Movie = z.object({
+  title: z.string().describe("The title of the movie"),
+  year: z.number().describe("The year the movie was released"),
+  director: z.string().describe("The director of the movie"),
+  rating: z.number().describe("The movie's rating out of 10"),
+});
+const modelWithStructure = model.withStructuredOutput(Movie);
+const response = await modelWithStructure.invoke("Provide details about the movie Inception"
+console.log(response);
+// {
+//   title: "Inception",
+//   year: 2010,
+//   director: "Christopher Nolan",
+//   rating: 8.8,
+// }
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+41 of 55 1/20/2026, 2:58 PM
+See your  for supported methods and configuration options.
+: Some providers support different methods ( ,
+, )
+: Use  to get both the parsed output and the raw
+: Zod models provide automatic validation, while JSON Schema requires
+manual validation
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+42 of 55 1/20/2026, 2:58 PM
+It can be useful to return the raw  object alongside the parsed
+representation to access response metadata such as . To do this, set
+ when calling :
+Schemas can be nested:
+import * as z from "zod";
+const Movie = z.object({
+  title: z.string().describe("The title of the movie"),
+  year: z.number().describe("The year the movie was released"),
+  director: z.string().describe("The director of the movie"),
+  rating: z.number().describe("The movie's rating out of 10"),
+  title: z.string().describe("The title of the movie"),
+  year: z.number().describe("The year the movie was released"),
+  rating: z.number().describe("The movie's rating out of 10"),
+});
+const modelWithStructure = model.withStructuredOutput(Movie, { includeRaw:
+const response = await modelWithStructure.invoke("Provide details about the movie Inceptio
+console.log(response);
+// {
+//   raw: AIMessage { ... },
+//   parsed: { title: "Inception", ... }
+// }
+  director: z.string().describe("The director of the movie"),  
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+43 of 55 1/20/2026, 2:58 PM
+Model profiles require .
+LangChain chat models can expose a dictionary of supported features and capabilities
+through a  property:
+import * as z from "zod";
+const Actor = z.object({
+  name: str
+  role: z.string(),
+});
+const MovieDetails = z.object({
+  title: z.string(),
+  year: z.number(),
+  cast: z.array(Actor),
+  genres: z.array(z.string()),
+  budget: z.number().nullable().describe("Budget in millions USD"),
+});
+const modelWithStructure = model.withStructuredOutput(MovieDetails);
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+44 of 55 1/20/2026, 2:58 PM
+Refer to the full set of fields in the .
+Much of the model profile data is powered by the  project, an open source
+initiative that provides model capability data. This data is augmented with additional fields
+for purposes of use with LangChain. These augmentations are kept aligned with the
+upstream project as it evolves.
+Model profile data allow applications to work around model capabilities dynamically. For
+example:
+���  can trigger summarization based on a modelʼs context
+window size.
+���  strategies in  can be inferred automatically (e.g., by
+checking support for native structured output features).
+��� Model inputs can be gated based on supported  and maximum input
+tokens.
+Model profile data can be changed if it is missing, stale, or incorrect.
+You can instantiate a chat model with any valid profile:
+model.profile;
+// {
+//   maxInputTokens: 400000,
+//   imageInputs: true,
+//   reasoningOutput: true,
+//   toolCalling: true,
+//   ...
+// }
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+45 of 55 1/20/2026, 2:58 PM
+The primary source for the data is the  project. These data are merged
+with additional fields and overrides in LangChain  and are
+shipped with those packages.
+Model profile data can be updated through the following process:
+����If needed) update the source data at  through a pull request to its
+.
+����If needed) update additional fields and overrides in 
+ through a pull request to the LangChain .
+Model profiles are a beta feature. The format of a profile is subject to change.
+Certain models can process and return non-textual data such as images, audio, and
+video. You can pass non-textual data to a model by providing .
+const customProfile = {
+maxInputTokens: 100_000,
+toolCalling: true,
+structuredOutput: true,
+// ...
+};
+const model = initChatModel("...", { profile: customProfile });
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+46 of 55 1/20/2026, 2:58 PM
+All LangChain chat models with underlying multimodal capabilities support:
+��� Data in the cross-provider standard format (see )
+��� OpenAI  format
+��� Any format that is native to that specific provider (e.g., Anthropic models accept
+Anthropic native format)
+See the  of the messages guide for details.
+Some models can return multimodal data as part of their response. If invoked to do so,
+the resulting  will have content blocks with multimodal types.
+See the  for details on specific providers.
+Many models are capable of performing multi-step reasoning to arrive at a conclusion.
+This involves breaking down complex problems into smaller, more manageable steps.
+ you can surface this reasoning process to better
+understand how the model arrived at its final answer.
+const response = await model.invoke("Create a picture of a cat");
+console.log(response.contentBlocks);
+// [
+//   { type: "text", text: "Here's a picture of a cat" },
+//   { type: "image", data: "...", mimeType: "image/jpeg" },
+// ]
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+47 of 55 1/20/2026, 2:58 PM
+Depending on the model, you can sometimes specify the level of effort it should put into
+reasoning. Similarly, you can request that the model turn off reasoning entirely. This may
+take the form of categorical “tiers” of reasoning (e.g.,  or ) or integer
+token budgets.
+For details, see the  or  for your respective chat model.
+LangChain supports running models locally on your own hardware. This is useful for
+scenarios where either data privacy is critical, you want to invoke a custom model, or
+when you want to avoid the costs incurred when using a cloud-based model.
+ is one of the easiest ways to run chat and embedding models locally.
+Many providers offer prompt caching features to reduce latency and cost on repeat
+processing of the same tokens. These features can be  or :
+ providers will automatically pass on cost savings if a
+request hits a cache. Examples:  and .
+ providers allow you to manually indicate cache points for greater
+control or to guarantee cost savings. Examples:
+ (via )
+Anthropicʼs 
+const stream = model.stream("Why do parrots have colorful feathers?");
+for await (const chunk of stream) {
+    const reasoningSteps = chunk.contentBlocks.filter(b => b.type === "reasoning"
+    console.log(reasoningSteps.length > 0 ? reasoningSteps : chunk.text);
+}
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+48 of 55 1/20/2026, 2:58 PM
+Prompt caching is often only engaged above a minimum input token threshold. See 
+ for details.
+Cache usage will be reflected in the  of the model response.
+Some providers support server-side  loops: models can interact with web
+search, code interpreters, and other tools and analyze the results in a single
+conversational turn.
+If a model invokes a tool server-side, the content of the response message will include
+content representing the invocation and result of the tool. Accessing the 
+of the response will return the server-side tool calls and results in a provider-agnostic
+format:
+This represents a single conversational turn; there are no associated 
+objects that need to be passed in as in client-side .
+See the  for your given provider for available tools and usage details.
+.
+import { initChatModel } from "langchain";
+const model = await initChatModel("gpt-4.1-mini");
+const modelWithTools = model.bindTools([{ type: "web_search" }])
+const message = await modelWithTools.invoke("What was a positive news story from today?"
+console.log(message.contentBlocks);
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+49 of 55 1/20/2026, 2:58 PM
+For many chat model integrations, you can configure the base URL for API requests,
+which allows you to use model providers that have OpenAI-compatible APIs or to use a
+proxy server.
+Many model providers offer OpenAI-compatible APIs (e.g., , ).
+You can use  with these providers by specifying the appropriate
+ parameter:
+When using direct chat model class instantiation, the parameter name may vary by
+provider. Check the respective  for details.
+Certain models can be configured to return token-level log probabilities representing the
+likelihood of a given token by setting the  parameter when initializing the
+model:
+model = initChatModel(
+    "MODEL_NAME",
+    {
+        modelProvider: "openai",
+        baseUrl: "BASE_URL",
+        apiKey: "YOUR_API_KEY",
+    }
+)
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+50 of 55 1/20/2026, 2:58 PM
+A number of model providers return token usage information as part of the invocation
+response. When available, this information will be included on the  objects
+produced by the corresponding model. For more details, see the  guide.
+Some provider APIs, notably OpenAI and Azure OpenAI chat completions, require users opt-
+in to receiving token usage data in streaming contexts. See the 
+section of the integration guide for details.
+When invoking a model, you can pass additional configuration through the 
+parameter using a  object. This provides run-time control over execution
+behavior, callbacks, and metadata tracking.
+Common configuration options include:
+const model = new ChatOpenAI({
+    model: "gpt-4o",
+    logprobs: true,
+});
+const responseMessage = await model.invoke("Why do parrots talk?");
+responseMessage.response_metadata.logprobs.content.slice(0, 5);
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+51 of 55 1/20/2026, 2:58 PM
+These configuration values are particularly useful when:
+Identifies this specific invocation in logs and traces. Not inherited by sub-calls.
+Labels inherited by all sub-calls for filtering and organization in debugging tools.
+Custom key-value pairs for tracking additional context, inherited by all sub-calls.
+Debugging with  tracing
+Implementing custom logging or monitoring
+Controlling resource usage in production
+Tracking invocations across complex pipelines
+const response = await model.invoke(
+    "Tell me a joke",
+    {
+        runName: "joke_generation",      // Custom name for this run
+        tags: ["humor", "demo"],          // Tags for categorization
+        metadata: {"user_id": "123"},     // Custom metadata
+        callbacks: [my_callback_handler], // Callback handlers
+    }
+)
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+52 of 55 1/20/2026, 2:58 PM
+Was this page helpful? Yes No
+Controls the maximum number of parallel calls when using .
+Handlers for monitoring and responding to events during execution.
+Maximum recursion depth for chains to prevent infinite loops in complex pipelines.
+See full  reference for all supported attributes.
+ or .
+ to Claude, VSCode, and more via MCP for real-time answers.
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+53 of 55 1/20/2026, 2:58 PM
+Forum
+Changelog
+LangChain Academy
+Trust Center
+About
+Careers
+Blog
+Powered by
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+54 of 55 1/20/2026, 2:58 PM
+Core components
+Models - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/models
+55 of 55 1/20/2026, 2:58 PM

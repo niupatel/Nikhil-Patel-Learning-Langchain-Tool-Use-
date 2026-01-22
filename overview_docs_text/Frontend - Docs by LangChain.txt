@@ -1,0 +1,934 @@
+Core components Streaming
+Build generative UIs with real-time streaming from LangChain agents,
+LangGraph graphs, and custom APIs
+The  React hook provides seamless integration with LangGraph streaming
+capabilities. It handles all the complexities of streaming, state management, and
+branching logic, letting you focus on building great generative UI experiences.
+Key features:
+Install the LangGraph SDK to use the  hook in your React application:
+ — Handle a stream of message chunks to form a complete
+message
+ — for messages, interrupts, loading states, and
+errors
+ — Create alternate conversation paths from any point in
+the chat history
+ — Bring your own components and styling
+npm install @langchain/langgraph-sdk
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+1 of 64 1/20/2026, 3:00 PM
+The  hook connects to any LangGraph graph, whether thatʼs running on from
+your own endpoint, or deployed using .
+import { useStream } from "@langchain/langgraph-sdk/react";
+function Chat() {
+  const stream = useStream({
+    assistantId: "agent",
+    // Local development
+    apiUrl: "http://localhost:2024",
+    // Production deployment (LangSmith hosted)
+    // apiUrl: "https://your-deployment.us.langgraph.app"
+  });
+  const handleSubmit = (message: string) => {
+    stream.submit({
+      messages: [
+        { content: message, type: "human" }
+      ],
+    });
+  };
+  return (
+    <div>
+      {stream.messages.map((message, idx) => (
+        <div key={message.id ?? idx}>
+          {message.type}: {message.content}
+        </div>
+      ))}
+      {stream.isLoading && <div>Loading...</div>}
+      {stream.error && <div>Error: {stream.error.message}</div>}
+    </div>
+  );
+}
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+2 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+3 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+4 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+5 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+6 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+7 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+8 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+9 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+10 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+11 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+12 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+13 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+14 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+15 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+16 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+17 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+18 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+19 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+20 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+21 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+22 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+23 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+24 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+25 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+26 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+27 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+28 of 64 1/20/2026, 3:00 PM
+Learn how to  for production-ready hosting with built-in
+observability, authentication, and scaling.
+The ID of the agent to connect to. When using LangSmith deployments, this must match the
+agent ID shown in your deployment dashboard. For custom API deployments or local
+development, this can be any string that your server uses to identify the agent.
+The URL of the LangGraph server. Defaults to  for local development.
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+29 of 64 1/20/2026, 3:00 PM
+API key for authentication. Required when connecting to deployed agents on LangSmith.
+Connect to an existing thread instead of creating a new one. Useful for resuming
+conversations.
+Callback invoked when a new thread is created. Use this to persist the thread ID for later use.
+Automatically resume an ongoing run when the component mounts. Set to  to use
+session storage, or provide a custom storage function.
+Callback invoked when a new run is created. Useful for persisting run metadata for resumption.
+Callback invoked when an error occurs during streaming.
+Callback invoked when the stream completes successfully with the final state.
+Handle custom events emitted from your agent using the . See 
+.
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+30 of 64 1/20/2026, 3:00 PM
+Handle state update events after each graph step.
+Handle metadata events with run and thread information.
+The key in the graph state that contains the messages array.
+Batch state updates for better rendering performance. Disable for immediate updates.
+Initial state values to display while the first stream is loading. Useful for showing cached thread
+data immediately.
+All messages in the current thread, including both human and AI messages.
+The current graph state values. Type is inferred from the agent or graph type parameter.
+Whether a stream is currently in progress. Use this to show loading indicators.
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+31 of 64 1/20/2026, 3:00 PM
+Any error that occurred during streaming.  when no error.
+Current interrupt requiring user input, such as human-in-the-loop approval requests.
+All tool calls across all messages, with their results and state ( , , or
+).
+Submit new input to the agent. Pass  as input when resuming from an interrupt with a
+command. Options include  for branching,  for optimistic
+updates, and  for optimistic thread creation.
+Stop the current stream immediately.
+Resume an existing stream by run ID. Use with  for manual stream resumption.
+Switch to a different branch in the conversation history.
+Get all tool calls for a specific AI message.
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+32 of 64 1/20/2026, 3:00 PM
+Get metadata for a message, including streaming info like  for identifying the
+source node, and  for branching.
+Tree representation of the thread for advanced branching controls in non-message based
+graphs.
+Keep track of conversations with built-in thread management. You can access the current
+thread ID and get notified when new threads are created:
+We recommend storing the  to let users resume conversations after page
+refreshes.
+import { useState } from "react";
+import { useStream } from "@langchain/langgraph-sdk/react";
+function Chat() {
+  const [threadId, setThreadId] = useState<string | null>(null);
+  const stream = useStream({
+    apiUrl: "http://localhost:2024",
+    assistantId: "agent",
+    threadId: threadId,
+    onThreadId: setThreadId,
+  });
+  // threadId is updated when a new thread is created
+  // Store it in URL params or localStorage for persistence
+}
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+33 of 64 1/20/2026, 3:00 PM
+The  hook can automatically resume an ongoing run upon mounting by
+setting . This is useful for continuing a stream after a page
+refresh, ensuring no messages and events generated during the downtime are lost.
+By default the ID of the created run is stored in , which can be
+swapped by passing a custom storage function:
+For manual control over the resumption process, use the run callbacks to persist
+metadata and  to resume:
+const stream = useStream({
+  apiUrl: "http://localhost:2024",
+  assistantId: "agent",
+  reconnectOnMount: true,
+});
+const stream = useStream({
+  apiUrl: "http://localhost:2024",
+  assistantId: "agent",
+  reconnectOnMount: () => window.localStorage,
+});
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+34 of 64 1/20/2026, 3:00 PM
+import { useStream } from "@langchain/langgraph-sdk/react";
+import { useEffect, useRef } from "react";
+function Chat({ threadId }: { threadId: string | null }) {
+  const stream = useStream({
+    apiUrl: "http://localhost:2024",
+    assistantId: "agent",
+    threadId,
+    onCreated: (run) => {
+      // Persist run ID when stream starts
+      window.sessionStorage.setItem(`resume:${run.thread_id}`, run.run_id);
+    },
+    onFinish: (_, run) => {
+      // Clean up when stream completes
+      window.sessionStorage.removeItem(`resume:${run?.thread_id}`);
+    },
+  });
+  // Resume stream on mount if there's a stored run ID
+  const joinedThreadId = useRef<string | null>(null);
+  useEffect(() => {
+    if (!threadId) return;
+    const runId = window.sessionStorage.getItem(`resume:${threadId}`);
+    if (runId && joinedThreadId.current !== threadId) {
+      stream.joinStream(runId);
+      joinedThreadId.current = threadId;
+    }
+  }, [threadId]);
+  const handleSubmit = (text: string) => {
+    // Use streamResumable to ensure events aren't lost
+    stream.submit(
+      { messages: [{ type: "human", content: text }] },
+      { streamResumable: true }
+    );
+  };
+}
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+35 of 64 1/20/2026, 3:00 PM
+You can optimistically update the client state before performing a network request,
+providing immediate feedback to the user:
+Use the  option in  to enable optimistic UI patterns where you need to
+know the thread ID before the thread is created:
+See a complete implementation of stream resumption with reconnectOnMount and
+thread persistence in the session-persistence example.
+const stream = useStream({
+  apiUrl: "http://localhost:2024",
+  assistantId: "agent",
+});
+const handleSubmit = (text: string) => {
+  const newMessage = { type: "human" as const, content: text };
+  stream.submit(
+    { messages: [newMessage] },
+    {
+      optimisticValues(prev) {
+        const prevMessages = prev.messages ?? [];
+        return { ...prev, messages: [...prevMessages, newMessage] };
+      },
+    }
+  );
+};
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+36 of 64 1/20/2026, 3:00 PM
+Use the  option to display cached thread data immediately while the
+history is being loaded from the server:
+import { useState } from "react";
+import { useStream } from "@langchain/langgraph-sdk/react";
+function Chat() {
+  const [threadId, setThreadId] = useState<string | null>(null);
+  const [optimisticThreadId] = useState(() => crypto.randomUUID());
+  const stream = useStream({
+    apiUrl: "http://localhost:2024",
+    assistantId: "agent",
+    threadId,
+    onThreadId: setThreadId,
+  });
+  const handleSubmit = (text: string) => {
+    // Navigate immediately without waiting for thread creation
+    window.history.pushState({}, "", `/threads/${optimisticThreadId}`);
+    // Create thread with the predetermined ID
+    stream.submit(
+      { messages: [{ type: "human", content: text }] },
+      { threadId: optimisticThreadId }
+    );
+  };
+}
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+37 of 64 1/20/2026, 3:00 PM
+Create alternate conversation paths by editing previous messages or regenerating AI
+responses. Use  to access checkpoint information for
+branching:
+function Chat({ threadId, cachedData }) {
+  const stream = useStream({
+    apiUrl: "http://localhost:2024",
+    assistantId: "agent",
+    threadId,
+    initialValues: cachedData?.values,
+  });
+  // Shows cached messages instantly, then updates when server responds
+}
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+38 of 64 1/20/2026, 3:00 PM
+import { useStream } from "@langchain/langgraph-sdk/react";
+import { BranchSwitcher } from "./BranchSwitcher";
+function Chat() {
+  const stream = useStream({
+    apiUrl: "http://localhost:2024",
+    assistantId: "agent",
+  });
+  return (
+    <div>
+      {stream.messages.map((message) => {
+        const meta = stream.getMessagesMetadata(message);
+        const parentCheckpoint = meta?.firstSeenState?.parent_checkpoint;
+        return (
+          <div key={message.id}>
+            <div>{message.content as string}</div>
+            {/* Edit human messages */}
+            {message.type === "human" && (
+              <button
+                onClick={() => {
+                  const newContent = prompt("Edit message:", message.content as
+                  if (newContent) {
+                    stream.submit(
+                      { messages: [{ type: "human", content: newContent }] },
+                      { checkpoint: parentCheckpoint }
+                    );
+                  }
+                }}
+              >
+                Edit
+              </button>
+            )}
+            {/* Regenerate AI messages */}
+            {message.type === "ai" && (
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+39 of 64 1/20/2026, 3:00 PM
+              <button
+                onClick={() => stream.submit(undefined, { checkpoint: parentCheckpoint
+              >
+                Regenerate
+              </button>
+            )}
+            {/* Switch between branches */}
+            <BranchSwitcher
+              branch={meta?.branch}
+              branchOptions={meta?.branchOptions}
+              onSelect={(branch) => stream.setBranch(branch)}
+            />
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+For advanced use cases, use the  property to get the tree
+representation of the thread for non-message based graphs.
+The  hook supports full type inference when used with agents created via
+ or graphs created with . Pass  or 
+as the type parameter to automatically infer tool call types.
+See a complete implementation of conversation branching with edit, regenerate,
+and branch switching in the branching-chat example.
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+40 of 64 1/20/2026, 3:00 PM
+When using , tool call types are automatically inferred from the tools you
+register to your agent:
+For custom  applications, the state types are inferred from the graphʼs
+annotation:
+import { createAgent, tool } from "langchain";
+import { z } from "zod";
+const getWeather = tool(
+  async ({ location }) => `Weather in ${location}: Sunny, 72°F�,
+  {
+    name: "get_weather",
+    description: "Get weather for a location",
+    schema: z.object({
+      location: z.string().describe("The city to get weather for"),
+    }),
+  }
+);
+export const agent = createAgent({
+  model: "openai:gpt-4o-mini",
+  tools: [getWeather],
+});
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+41 of 64 1/20/2026, 3:00 PM
+If youʼre using LangGraph.js, you can reuse your graphʼs annotation types. Make sure to
+only import types to avoid importing the entire LangGraph.js runtime:
+import { StateGraph, MessagesAnnotation, START, END } from "@langchain/langgraph"
+import { ChatOpenAI } from "@langchain/openai";
+const model = new ChatOpenAI({ model: "gpt-4o-mini" });
+const workflow = new StateGraph(MessagesAnnotation)
+  .addNode("agent", async (state) => {
+    const response = await model.invoke(state.messages);
+    return { messages: [response] };
+  })
+  .addEdge(START, "agent")
+  .addEdge("agent", END);
+export const graph = workflow.compile();
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+42 of 64 1/20/2026, 3:00 PM
+You can specify additional type parameters for interrupts, custom events, and
+configurable options:
+import {
+  Annotation,
+  MessagesAnnotation,
+  type StateType,
+  type UpdateType,
+} from "@langchain/langgraph/web";
+const AgentState = Annotation.Root({
+  ...MessagesAnnotation.spec,
+  context: Annotation<string>(),
+});
+const stream = useStream<
+  StateType<typeof AgentState.spec>,
+  { UpdateType: UpdateType<typeof AgentState.spec> }
+>({
+  apiUrl: "http://localhost:2024",
+  assistantId: "agent",
+});
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+43 of 64 1/20/2026, 3:00 PM
+Use  to extract and render tool calls from AI messages. Tool calls include
+the call details, result (if completed), and state.
+import type { Message } from "@langchain/langgraph-sdk";
+type State = { messages: Message[]; context?: string };
+const stream = useStream<
+  State,
+  {
+    UpdateType: { messages: Message[] | Message; context?: string };
+    InterruptType: string;
+    CustomEventType: { type: "progress" | "debug"; payload: unknown };
+    ConfigurableType: { model: string };
+  }
+>({
+  apiUrl: "http://localhost:2024",
+  assistantId: "agent",
+});
+// stream.interrupt is typed as string | undefined
+// onCustomEvent receives typed events
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+44 of 64 1/20/2026, 3:00 PM
+import { useStream } from "@langchain/langgraph-sdk/react";
+import type { agent } from "./agent";
+import { ToolCallCard } from "./ToolCallCard";
+import { MessageBubble } from "./MessageBubble";
+function Chat() {
+  const stream = useStream<typeof agent>({
+    assistantId: "agent",
+    apiUrl: "http://localhost:2024",
+  });
+  return (
+    <div className="flex flex-col gap-4">
+      {stream.messages.map((message, idx) => {
+        if (message.type === "ai") {
+          const toolCalls = stream.getToolCalls(message);
+          if (toolCalls.length > 0) {
+            return (
+              <div key={message.id ?? idx} className="flex flex-col gap-2">
+                {toolCalls.map((toolCall) => (
+                  <ToolCallCard key={toolCall.id} toolCall={toolCall} />
+                ))}
+              </div>
+            );
+          }
+        }
+        return <MessageBubble key={message.id ?? idx} message={message} />;
+      })}
+    </div>
+  );
+}
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+45 of 64 1/20/2026, 3:00 PM
+Stream custom data from your agent using the  in your tools or nodes. Handle
+these events in the UI with the  callback.
+See a complete implementation of tool call rendering with weather, calculator, and
+note-taking tools in the tool-calling-agent example.
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+46 of 64 1/20/2026, 3:00 PM
+import { tool, type ToolRuntime } from "langchain";
+import { z } from "zod";
+// Define your custom event types
+interface ProgressData {
+  type: "progress";
+  id: string;
+  message: string;
+  progress: number;
+}
+const analyzeDataTool = tool(
+  async ({ dataSource }, config: ToolRuntime) => {
+    const steps = ["Connecting...", "Fetching...", "Processing...", "Done!"];
+    for (let i = 0; i < steps.length; i++) {
+      // Emit progress events during execution
+      config.writer?.({
+        type: "progress",
+        id: `analysis-${Date.now()}`,
+        message: steps[i],
+        progress: ((i + 1) / steps.length) * 100,
+      } satisfies ProgressData);
+      await new Promise((resolve) => setTimeout(resolve, 500));
+    }
+    return JSON.stringify({ result: "Analysis complete" });
+  },
+  {
+    name: "analyze_data",
+    description: "Analyze data with progress updates",
+    schema: z.object({
+      dataSource: z.string().describe("Data source to analyze"),
+    }),
+  }
+);
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+47 of 64 1/20/2026, 3:00 PM
+The  hook provides callback options that give you access to different types of
+streaming events. You donʼt need to explicitly configure stream modes—just pass
+callbacks for the event types you want to handle:
+See a complete implementation of custom events with progress bars, status
+badges, and file operation cards in the custom-streaming example.
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+48 of 64 1/20/2026, 3:00 PM
+const stream = useStream({
+  apiUrl: "http://localhost:2024",
+  assistantId: "agent",
+  // Handle state updates after each graph step
+  onUpdateEvent: (update, options) => {
+    console.log("Graph update:", update);
+  },
+  // Handle custom events streamed from your graph
+  onCustomEvent: (event, options) => {
+    console.log("Custom event:", event);
+  },
+  // Handle metadata events with run/thread info
+  onMetadataEvent: (metadata) => {
+    console.log("Run ID:", metadata.run_id);
+    console.log("Thread ID:", metadata.thread_id);
+  },
+  onError: (error) => {
+    console.error("Stream error:", error);
+  },
+  onFinish: (state, options) => {
+    console.log("Stream finished with final state:", state);
+  },
+});
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+49 of 64 1/20/2026, 3:00 PM
+Called when a state update is received after each
+graph step
+Called when a custom event is received from your
+graph
+Called with run and thread metadata
+Called when an error occurs �
+Called when the stream completes �
+When working with multi-agent systems or graphs with multiple nodes, use message
+metadata to identify which node generated each message. This is particularly useful
+when multiple LLMs run in parallel and you want to display their outputs with distinct
+visual styling.
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+50 of 64 1/20/2026, 3:00 PM
+import { useStream } from "@langchain/langgraph-sdk/react";
+import type { agent } from "./agent";
+import { MessageBubble } from "./MessageBubble";
+// Node configuration for visual display
+const NODE_CONFIG: Record<string, { label: string; color: string }> = {
+  researcher_analytical: { label: "Analytical Research", color: "cyan" },
+  researcher_creative: { label: "Creative Research", color: "purple" },
+  researcher_practical: { label: "Practical Research", color: "emerald" },
+};
+function MultiAgentChat() {
+  const stream = useStream<typeof agent>({
+    assistantId: "parallel-research",
+    apiUrl: "http://localhost:2024",
+  });
+  return (
+    <div className="flex flex-col gap-4">
+      {stream.messages.map((message, idx) => {
+        if (message.type !== "ai") {
+          return <MessageBubble key={message.id ?? idx} message={message} />;
+        }
+        // Get streaming metadata to identify the source node
+        const metadata = stream.getMessagesMetadata?.(message);
+        const nodeName =
+          (metadata?.streamMetadata?.langgraph_node as string) ||
+          (message as { name?: string }).name;
+        const config = nodeName ? NODE_CONFIG[nodeName] : null;
+        if (!config) {
+          return <MessageBubble key={message.id ?? idx} message={message} />;
+        }
+        return (
+          <div
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+51 of 64 1/20/2026, 3:00 PM
+            key={message.id ?? idx}
+            className={`bg-${config.color}-950/30 border border-${config.color}
+          >
+            <div className={`text-sm font-semibold text-${config.color}-400 mb-2`
+              {config.label}
+            </div>
+            <div className="text-neutral-200 whitespace-pre-wrap">
+              {typeof message.content === "string" ? message.content : ""}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+Handle interrupts when the agent requires human approval for tool execution. Learn more
+in the  guide.
+See a complete implementation of multi-agent streaming with three parallel
+researchers and distinct visual styling in the parallel-research example.
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+52 of 64 1/20/2026, 3:00 PM
+import { useState } from "react";
+import { useStream } from "@langchain/langgraph-sdk/react";
+import type { HITLRequest, HITLResponse } from "langchain";
+import type { agent } from "./agent";
+import { MessageBubble } from "./MessageBubble";
+function HumanInTheLoopChat() {
+  const stream = useStream<typeof agent, { InterruptType: HITLRequest }>({
+    assistantId: "human-in-the-loop",
+    apiUrl: "http://localhost:2024",
+  });
+  const [isProcessing, setIsProcessing] = useState(false);
+  // Type assertion for interrupt value
+  const hitlRequest = stream.interrupt?.value as HITLRequest | undefined;
+  const handleApprove = async (index: number) => {
+    if (!hitlRequest) return;
+    setIsProcessing(true);
+    try {
+      const decisions: HITLResponse["decisions"] =
+        hitlRequest.actionRequests.map((_, i) =>
+          i === index ? { type: "approve" } : { type: "approve" }
+        );
+      await stream.submit(null, {
+        command: {
+          resume: { decisions } as HITLResponse,
+        },
+      });
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+  const handleReject = async (index: number, reason: string) => {
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+53 of 64 1/20/2026, 3:00 PM
+    if (!hitlRequest) return;
+    setIsProcessing(true);
+    try {
+      const decisions: HITLResponse["decisions"] =
+        hitlRequest.actionRequests.map((_, i) =>
+          i === index
+            ? { type: "reject", message: reason }
+            : { type: "reject", message: "Rejected along with other actions" }
+        );
+      await stream.submit(null, {
+        command: {
+          resume: { decisions } as HITLResponse,
+        },
+      });
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+  return (
+    <div>
+      {/* Render messages */}
+      {stream.messages.map((message, idx) => (
+        <MessageBubble key={message.id ?? idx} message={message} />
+      ))}
+      {/* Render approval UI when interrupted */}
+      {hitlRequest && hitlRequest.actionRequests.length > 0 && (
+        <div className="bg-amber-900/20 border border-amber-500/30 rounded-xl p-4 mt-4"
+          <h3 className="text-amber-400 font-semibold mb-4">
+            Action requires approval
+          </h3>
+          {hitlRequest.actionRequests.map((action, idx) => (
+            <div
+              key={idx}
+              className="bg-neutral-900 rounded-lg p-4 mb-4 last:mb-0"
+            >
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+54 of 64 1/20/2026, 3:00 PM
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-sm font-mono text-white">
+                  {action.name}
+                </span>
+              </div>
+              <pre className="text-xs bg-black rounded p-2 mb-3 overflow-x-auto"
+                {JSON.stringify(action.args, null, 2)}
+              </pre>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleApprove(idx)}
+                  disabled={isProcessing}
+                  className="px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-sm roun
+                >
+                  Approve
+                </button>
+                <button
+                  onClick={() => handleReject(idx, "User rejected")}
+                  disabled={isProcessing}
+                  className="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-sm rounded 
+                >
+                  Reject
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+See a complete implementation of approval workflows with approve, reject, and
+edit actions in the human-in-the-loop example.
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+55 of 64 1/20/2026, 3:00 PM
+Extended reasoning/thinking support is currently experimental. The streaming interface for
+reasoning tokens varies by provider �OpenAI vs. Anthropic) and may change as abstractions
+are developed.
+When using models with extended reasoning capabilities (like OpenAIʼs reasoning models
+or Anthropicʼs extended thinking), the thinking process is embedded in the message
+content. Youʼll need to extract and display it separately.
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+56 of 64 1/20/2026, 3:00 PM
+import { useStream } from "@langchain/langgraph-sdk/react";
+import type { Message } from "@langchain/langgraph-sdk";
+import type { agent } from "./agent";
+import { getReasoningFromMessage, getTextContent } from "./utils";
+function ReasoningChat() {
+  const stream = useStream<typeof agent>({
+    assistantId: "reasoning-agent",
+    apiUrl: "http://localhost:2024",
+  });
+  return (
+    <div className="flex flex-col gap-4">
+      {stream.messages.map((message, idx) => {
+        if (message.type === "ai") {
+          const reasoning = getReasoningFromMessage(message);
+          const textContent = getTextContent(message);
+          return (
+            <div key={message.id ?? idx}>
+              {/* Render reasoning bubble if present */}
+              {reasoning && (
+                <div className="mb-4">
+                  <div className="text-xs font-medium text-amber-400/80 mb-2">
+                    Reasoning
+                  </div>
+                  <div className="bg-amber-950/50 border border-amber-500/20 rounded-2xl px-4 py
+                    <div className="text-sm text-amber-100/90 whitespace-pre-wrap"
+                      {reasoning}
+                    </div>
+                  </div>
+                </div>
+              )}
+              {/* Render text content */}
+              {textContent && (
+                <div className="text-neutral-100 whitespace-pre-wrap">
+                  {textContent}
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+57 of 64 1/20/2026, 3:00 PM
+                </div>
+              )}
+            </div>
+          );
+        }
+        return <MessageBubble key={message.id ?? idx} message={message} />;
+      })}
+      {stream.isLoading && (
+        <div className="flex items-center gap-2 text-amber-400/70">
+          <span className="text-sm">Thinking...</span>
+        </div>
+      )}
+    </div>
+  );
+}
+For custom LangGraph applications, embed your tool call types in your stateʼs messages
+property.
+See a complete implementation of reasoning token display with OpenAI and
+Anthropic models in the reasoning-agent example.
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+58 of 64 1/20/2026, 3:00 PM
+You can also specify additional type configuration for interrupts and configurable options:
+import { Message } from "@langchain/langgraph-sdk";
+import { useStream } from "@langchain/langgraph-sdk/react";
+// Define your tool call types as a discriminated union
+type MyToolCalls =
+  | { name: "search"; args: { query: string }; id?: string }
+  | { name: "calculate"; args: { expression: string }; id?: string };
+// Embed tool call types in your state's messages
+interface MyGraphState {
+  messages: Message<MyToolCalls>[];
+  context?: string;
+}
+function CustomGraphChat() {
+  const stream = useStream<MyGraphState>({
+    assistantId: "my-graph",
+    apiUrl: "http://localhost:2024",
+  });
+  // stream.values is typed as MyGraphState
+  // stream.toolCalls[0].call.name is typed as "search" | "calculate"
+}
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+59 of 64 1/20/2026, 3:00 PM
+For custom API endpoints or non-standard deployments, use the  option with
+ to connect to any streaming API.
+interface MyGraphState {
+  messages: Message<MyToolCalls>[];
+}
+function CustomGraphChat() {
+  const stream = useStream<
+    MyGraphState,
+    {
+      InterruptType: { question: string };
+      ConfigurableType: { userId: string };
+    }
+  >({
+    assistantId: "my-graph",
+    apiUrl: "http://localhost:2024",
+  });
+  // stream.interrupt is typed as { question: string } | undefined
+}
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+60 of 64 1/20/2026, 3:00 PM
+import { useMemo } from "react";
+import { useStream, FetchStreamTransport } from "@langchain/langgraph-sdk/react"
+function CustomAPIChat({ apiKey }: { apiKey: string }) {
+  // Create transport with custom request handling
+  const transport = useMemo(() => {
+    return new FetchStreamTransport({
+      apiUrl: "/api/my-agent",
+      onRequest: async (url: string, init: RequestInit) => {
+        // Inject API key or other custom data into requests
+        const customBody = JSON.stringify({
+          ...(JSON.parse(init.body as string) || {}),
+          apiKey,
+        });
+        return {
+          ...init,
+          body: customBody,
+          headers: {
+            ...init.headers,
+            "X-Custom-Header": "value",
+          },
+        };
+      },
+    });
+  }, [apiKey]);
+  const stream = useStream({
+    transport,
+  });
+  // Use stream as normal
+  return (
+    <div>
+      {stream.messages.map((message, idx) => (
+        <MessageBubble key={message.id ?? idx} message={message} />
+      ))}
+    </div>
+  );
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+61 of 64 1/20/2026, 3:00 PM
+Was this page helpful? Yes No
+ or .
+ to Claude, VSCode, and more via MCP for real-time answers.
+ — Server-side streaming with LangChain agents
+ — Full API documentation
+ — Pre-built chat interface for LangGraph agents
+ — Configuring interrupts for human review
+ — Building agents with multiple LLMs
+}
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+62 of 64 1/20/2026, 3:00 PM
+Forum
+Changelog
+LangChain Academy
+Trust Center
+About
+Careers
+Blog
+Powered by
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+63 of 64 1/20/2026, 3:00 PM
+Streaming
+Frontend - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/streaming/frontend
+64 of 64 1/20/2026, 3:00 PM

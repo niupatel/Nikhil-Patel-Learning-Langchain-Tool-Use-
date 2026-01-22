@@ -1,0 +1,596 @@
+Core components
+Messages are the fundamental unit of context for models in LangChain. They represent
+the input and output of models, carrying both the content and metadata needed to
+represent the state of a conversation when interacting with an LLM.
+Messages are objects that contain:
+LangChain provides a standard message type that works across all model providers,
+ensuring consistent behavior regardless of the model being called.
+The simplest way to use messages is to create message objects and pass them to a
+model when .
+ - Identifies the message type (e.g. , )
+ - Represents the actual content of the message (like text, images, audio,
+documents, etc.)
+ - Optional fields such as response information, message IDs, and token
+usage
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+1 of 53 1/20/2026, 2:59 PM
+Text prompts are strings - ideal for straightforward generation tasks where you donʼt
+need to retain conversation history.
+Alternatively, you can pass in a list of messages to the model by providing a list of
+message objects.
+You have a single, standalone request
+You donʼt need conversation history
+You want minimal code complexity
+import { initChatModel, HumanMessage, SystemMessage } from "langchain";
+const model = await initChatModel("gpt-5-nano");
+const systemMsg = new SystemMessage("You are a helpful assistant.");
+const humanMsg = new HumanMessage("Hello, how are you?");
+const messages = [systemMsg, humanMsg];
+const response = await model.invoke(messages);  // Returns AIMessage
+const response = await model.invoke("Write a haiku about spring");
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+2 of 53 1/20/2026, 2:59 PM
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+3 of 53 1/20/2026, 2:59 PM
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+4 of 53 1/20/2026, 2:59 PM
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+5 of 53 1/20/2026, 2:59 PM
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+6 of 53 1/20/2026, 2:59 PM
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+7 of 53 1/20/2026, 2:59 PM
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+8 of 53 1/20/2026, 2:59 PM
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+9 of 53 1/20/2026, 2:59 PM
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+10 of 53 1/20/2026, 2:59 PM
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+11 of 53 1/20/2026, 2:59 PM
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+12 of 53 1/20/2026, 2:59 PM
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+13 of 53 1/20/2026, 2:59 PM
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+14 of 53 1/20/2026, 2:59 PM
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+15 of 53 1/20/2026, 2:59 PM
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+16 of 53 1/20/2026, 2:59 PM
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+17 of 53 1/20/2026, 2:59 PM
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+18 of 53 1/20/2026, 2:59 PM
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+19 of 53 1/20/2026, 2:59 PM
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+20 of 53 1/20/2026, 2:59 PM
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+21 of 53 1/20/2026, 2:59 PM
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+22 of 53 1/20/2026, 2:59 PM
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+23 of 53 1/20/2026, 2:59 PM
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+24 of 53 1/20/2026, 2:59 PM
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+25 of 53 1/20/2026, 2:59 PM
+You can also specify messages directly in OpenAI chat completions format.
+Managing multi-turn conversations
+Working with multimodal content (images, audio, files)
+Including system instructions
+import { SystemMessage, HumanMessage, AIMessage } from "langchain";
+const messages = [
+  new SystemMessage("You are a poetry expert"),
+  new HumanMessage("Write a haiku about spring"),
+  new AIMessage("Cherry blossoms bloom..."),
+];
+const response = await model.invoke(messages);
+const messages = [
+  { role: "system", content: "You are a poetry expert" },
+  { role: "user", content: "Write a haiku about spring" },
+  { role: "assistant", content: "Cherry blossoms bloom..." },
+];
+const response = await model.invoke(messages);
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+26 of 53 1/20/2026, 2:59 PM
+A  represent an initial set of instructions that primes the modelʼs behavior.
+You can use a system message to set the tone, define the modelʼs role, and establish
+guidelines for responses.
+ - Tells the model how to behave and provide context for
+interactions
+ - Represents user input and interactions with the model
+ - Responses generated by the model, including text content, tool calls,
+and metadata
+ - Represents the outputs of 
+import { SystemMessage, HumanMessage, AIMessage } from "langchain";
+const systemMsg = new SystemMessage("You are a helpful coding assistant.");
+const messages = [
+  systemMsg,
+  new HumanMessage("How do I create a REST API?"),
+];
+const response = await model.invoke(messages);
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+27 of 53 1/20/2026, 2:59 PM
+A  represents user input and interactions. They can contain text, images,
+audio, files, and any other amount of multimodal .
+import { SystemMessage, HumanMessage } from "langchain";
+const systemMsg = new SystemMessage(`
+You are a senior TypeScript developer with expertise in web frameworks.
+Always provide code examples and explain your reasoning.
+Be concise but thorough in your explanations.
+`);
+const messages = [
+  systemMsg,
+  new HumanMessage("How do I create a REST API?"),
+];
+const response = await model.invoke(messages);
+const response = await model.invoke([
+  new HumanMessage("What is machine learning?"),
+]);
+const response = await model.invoke("What is machine learning?");
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+28 of 53 1/20/2026, 2:59 PM
+The  field behavior varies by provider – some use it for user identification, others
+ignore it. To check, refer to the model providerʼs .
+An  represents the output of a model invocation. They can include multimodal
+data, tool calls, and provider-specific metadata that you can later access.
+ objects are returned by the model when calling it, which contains all of the
+associated metadata in the response.
+Providers weigh/contextualize types of messages differently, which means it is
+sometimes helpful to manually create a new  object and insert it into the
+message history as if it came from the model.
+const humanMsg = new HumanMessage({
+  content: "Hello!",
+  name: "alice",
+  id: "msg_123",
+});
+const response = await model.invoke("Explain AI");
+console.log(typeof response);  // AIMessage
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+29 of 53 1/20/2026, 2:59 PM
+The text content of the message.
+The raw content of the message.
+The standardized content blocks of the message. �See )
+The tool calls made by the model.
+Empty if no tools are called.
+A unique identifier for the message (either automatically generated by LangChain or returned in
+import { AIMessage, SystemMessage, HumanMessage } from "langchain";
+const aiMsg = new AIMessage("I'd be happy to help you with that question!");
+const messages = [
+  new SystemMessage("You are a helpful assistant"),
+  new HumanMessage("Can you help me?"),
+  aiMsg,  // Insert as if it came from the model
+  new HumanMessage("Great! What's 2+2?")
+]
+const response = await model.invoke(messages);
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+30 of 53 1/20/2026, 2:59 PM
+the provider response)
+The usage metadata of the message, which can contain token counts when available. See
+.
+The response metadata of the message.
+When models make , theyʼre included in the :
+Other structured data, such as reasoning or citations, can also appear in message
+.
+An  can hold token counts and other usage metadata in its  field:
+const modelWithTools = model.bindTools([getWeather]);
+const response = await modelWithTools.invoke("What's the weather in Paris?");
+for (const toolCall of response.tool_calls) {
+  console.log(`Tool: ${toolCall.name}`);
+  console.log(`Args: ${toolCall.args}`);
+  console.log(`ID: ${toolCall.id}`);
+}
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+31 of 53 1/20/2026, 2:59 PM
+See  for details.
+During streaming, youʼll receive  objects that can be combined into a full
+message object:
+import { initChatModel } from "langchain";
+const model = await initChatModel("gpt-5-nano");
+const response = await model.invoke("Hello!");
+console.log(response.usage_metadata);
+{
+  "output_tokens": 304,
+  "input_tokens": 8,
+  "total_tokens": 312,
+  "input_token_details": {
+    "cache_read": 0
+  },
+  "output_token_details": {
+    "reasoning": 256
+  }
+}
+import { AIMessageChunk } from "langchain";
+let finalChunk: AIMessageChunk | undefined;
+for (const chunk of chunks) {
+  finalChunk = finalChunk ? finalChunk.concat(chunk) : chunk;
+}
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+32 of 53 1/20/2026, 2:59 PM
+Learn more:
+For models that support , AI messages can contain tool calls. Tool messages
+are used to pass the results of a single tool execution back to the model.
+ can generate  objects directly. Below, we show a simple example. Read
+more in the .
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+33 of 53 1/20/2026, 2:59 PM
+The stringified output of the tool call.
+The ID of the tool call that this message is responding to. Must match the ID of the tool call in
+the .
+import { AIMessage, ToolMessage } from "langchain";
+const aiMessage = new AIMessage({
+  content: [],
+  tool_calls: [{
+    name: "get_weather",
+    args: { location: "San Francisco" },
+    id: "call_123"
+  }]
+});
+const toolMessage = new ToolMessage({
+  content: "Sunny, 72°F",
+  tool_call_id: "call_123"
+});
+const messages = [
+  new HumanMessage("What's the weather in San Francisco?"),
+  aiMessage,  // Model's tool call
+  toolMessage,  // Tool execution result
+];
+const response = await model.invoke(messages);  // Model processes the result
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+34 of 53 1/20/2026, 2:59 PM
+The name of the tool that was called.
+Additional data not sent to the model but can be accessed programmatically.
+The  field stores supplementary data that wonʼt be sent to the model but can be
+accessed programmatically. This is useful for storing raw results, debugging information, or
+data for downstream processing without cluttering the modelʼs context.
+For example, a  tool could retrieve a passage from a document for
+reference by a model. Where message  contains text that the
+model will reference, an  can contain document identifiers or
+other metadata that an application can use (e.g., to render a page). See
+example below:
+See the  for an end-to-end example of building retrieval
+ with LangChain.
+import { ToolMessage } from "langchain";
+// Artifact available downstream
+const artifact = { document_id: "doc_123", page: 0 };
+const toolMessage = new ToolMessage({
+  content: "It was the best of times, it was the worst of times."
+  tool_call_id: "call_123",
+  name: "search_books",
+  artifact
+});
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+35 of 53 1/20/2026, 2:59 PM
+You can think of a messageʼs content as the payload of data that gets sent to the model.
+Messages have a  attribute that is loosely-typed, supporting strings and lists of
+untyped objects (e.g., dictionaries). This allows support for provider-native structures
+directly in LangChain chat models, such as  content and other data.
+Separately, LangChain provides dedicated content types for text, reasoning, citations,
+multi-modal data, server-side tool calls, and other message content. See 
+below.
+LangChain chat models accept message content in the  attribute.
+This may contain either:
+��� A string
+��� A list of content blocks in a provider-native format
+��� A list of 
+See below for an example using  inputs:
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+36 of 53 1/20/2026, 2:59 PM
+LangChain provides a standard representation for message content that works across
+providers.
+Message objects implement a  property that will lazily parse the
+ attribute into a standard, type-safe representation. For example, messages
+generated from  or  will include  or 
+blocks in the format of the respective provider, but can be lazily parsed into a consistent
+ representation:
+import { HumanMessage } from "langchain";
+// String content
+const humanMessage = new HumanMessage("Hello, how are you?");
+// Provider-native format (e.g., OpenAI)
+const humanMessage = new HumanMessage({
+  content: [
+    { type: "text", text: "Hello, how are you?" },
+    {
+      type: "image_url",
+      image_url: { url: "https://example.com/image.jpg" },
+    },
+  ],
+});
+// List of standard content blocks
+const humanMessage = new HumanMessage({
+  contentBlocks: [
+    { type: "text", text: "Hello, how are you?" },
+    { type: "image", url: "https://example.com/image.jpg" },
+  ],
+});
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+37 of 53 1/20/2026, 2:59 PM
+See the  to get started with the inference provider of your choice.
+import { AIMessage } from "@langchain/core/messages";
+const message = new AIMessage({
+  content: [
+    {
+      "type": "thinking",
+      "thinking": "...",
+      "signature": "WaUjzkyp...",
+    },
+    {
+      "type":"text",
+      "text": "...",
+      "id": "msg_abc123",
+    },
+  ],
+  response_metadata: { model_provider: "anthropic" },
+});
+console.log(message.contentBlocks);
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+38 of 53 1/20/2026, 2:59 PM
+If an application outside of LangChain needs access to the standard content block
+representation, you can opt-in to storing content blocks in message content.
+To do this, you can set the  environment variable to . Or, initialize
+any chat model with :
+ refers to the ability to work with data that comes in different forms, such as
+text, audio, images, and video. LangChain includes standard types for these data that can
+be used across providers.
+ can accept multimodal data as input and generate it as output. Below we
+show short examples of input messages featuring multimodal data.
+Extra keys can be included top-level in the content block or nested in 
+.
+ and , for example, require a filename for PDFs. See the
+ for your chosen model for specifics.
+import { initChatModel } from "langchain";
+const model = await initChatModel(
+  "gpt-5-nano",
+  { outputVersion: "v1" }
+);
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+39 of 53 1/20/2026, 2:59 PM
+Not all models support all file types. Check the model providerʼs  for supported
+formats and size limits.
+// From URL
+const message = new HumanMessage({
+  content: [
+    { type: "text", text: "Describe the content of this image." },
+    {
+      type: "image",
+      source_type: "url",
+      url: "https://example.com/path/to/image.jpg"
+    },
+  ],
+});
+// From base64 data
+const message = new HumanMessage({
+  content: [
+    { type: "text", text: "Describe the content of this image." },
+    {
+      type: "image",
+      source_type: "base64",
+      data: "AAAAIGZ0eXBtcDQyAAAAAGlzb21tcDQyAAACAGlzb2...",
+    },
+  ],
+});
+// From provider-managed File ID
+const message = new HumanMessage({
+  content: [
+    { type: "text", text: "Describe the content of this image." },
+    { type: "image", source_type: "id", id: "file-abc123" },
+  ],
+});
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+40 of 53 1/20/2026, 2:59 PM
+Content blocks are represented (either when creating a message or accessing the
+ field) as a list of typed objects. Each item in the list must adhere to one
+of the following block types:
+ Standard text output
+Always 
+The text content
+List of annotations for the text
+{
+    type: "text",
+    text: "Hello world",
+    annotations: []
+}
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+41 of 53 1/20/2026, 2:59 PM
+ Model reasoning steps
+Always 
+The reasoning content
+ Image data
+Always 
+URL pointing to the image location.
+{
+    type: "reasoning",
+    reasoning: "The user is asking about..."
+}
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+42 of 53 1/20/2026, 2:59 PM
+Base64-encoded image data.
+Reference to the image in an external file storage system (e.g., OpenAI or Anthropicʼs
+Files API�.
+Image  (e.g., , ). Required for base64 data.
+ Audio data
+Always 
+URL pointing to the audio location.
+Base64-encoded audio data.
+Reference to the audio file in an external file storage system (e.g., OpenAI or
+Anthropicʼs Files API�.
+Audio  (e.g., , ). Required for base64 data.
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+43 of 53 1/20/2026, 2:59 PM
+ Video data
+Always 
+URL pointing to the video location.
+Base64-encoded video data.
+Reference to the video file in an external file storage system (e.g., OpenAI or
+Anthropicʼs Files API�.
+Video  (e.g., , ). Required for base64 data.
+ Generic files �PDF, etc)
+Always 
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+44 of 53 1/20/2026, 2:59 PM
+URL pointing to the file location.
+Base64-encoded file data.
+Reference to the file in an external file storage system (e.g., OpenAI or Anthropicʼs Files
+API�.
+File  (e.g., ). Required for base64 data.
+ Document text ( , )
+Always 
+The text content
+Title of the text content
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+45 of 53 1/20/2026, 2:59 PM
+ of the text (e.g., , )
+ Function calls
+Always 
+Name of the tool to call
+Arguments to pass to the tool
+Unique identifier for this tool call
+{
+    type: "tool_call",
+    name: "search",
+    args: { query: "weather" },
+    id: "call_123"
+}
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+46 of 53 1/20/2026, 2:59 PM
+ Streaming tool fragments
+Always 
+Name of the tool being called
+Partial tool arguments (may be incomplete JSON�
+Tool call identifier
+Position of this chunk in the stream
+ Malformed calls
+Always 
+Name of the tool that failed to be called
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+47 of 53 1/20/2026, 2:59 PM
+Raw arguments that failed to parse
+Description of what went wrong
+ Invalid JSON, missing required fields
+ Tool call that is executed server-side.
+Always 
+An identifier associated with the tool call.
+The name of the tool to be called.
+Partial tool arguments (may be incomplete JSON�
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+48 of 53 1/20/2026, 2:59 PM
+ Streaming server-side tool call fragments
+Always 
+An identifier associated with the tool call.
+Name of the tool being called
+Partial tool arguments (may be incomplete JSON�
+Position of this chunk in the stream
+ Search results
+Always 
+Identifier of the corresponding server tool call.
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+49 of 53 1/20/2026, 2:59 PM
+Identifier associated with the server tool result.
+Execution status of the server-side tool.  or .
+Output of the executed tool.
+ Provider-specific escape hatch
+Always 
+Provider-specific data structure
+ For experimental or provider-unique features
+Additional provider-specific content types may be found within the 
+ of each model provider.
+Each of these content blocks mentioned above are indvidually addressable as types
+when importing the  type.
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+50 of 53 1/20/2026, 2:59 PM
+View the canonical type definitions in the .
+Content blocks were introduced as a new property on messages in LangChain v1 to
+standardize content formats across providers while maintaining backward compatibility with
+existing code.
+Content blocks are not a replacement for the  property, but rather a new property
+that can be used to access the content of a message in a standardized format.
+ accept a sequence of message objects as input and return an  as
+output. Interactions are often stateless, so that a simple conversational loop involves
+invoking a model with a growing list of messages.
+Refer to the below guides to learn more:
+Built-in features for 
+Strategies for managing context windows, including 
+import { ContentBlock } from "langchain";
+// Text block
+const textBlock: ContentBlock.Text = {
+    type: "text",
+    text: "Hello world",
+}
+// Image block
+const imageBlock: ContentBlock.Multimodal.Image = {
+    type: "image",
+    url: "https://example.com/image.png",
+    mimeType: "image/png",
+}
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+51 of 53 1/20/2026, 2:59 PM
+Was this page helpful? Yes No
+ or .
+ to Claude, VSCode, and more via MCP for real-time answers.
+Forum
+Changelog
+LangChain Academy
+Trust Center
+About
+Careers
+Blog
+Powered by
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+52 of 53 1/20/2026, 2:59 PM
+Core components
+Messages - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/messages
+53 of 53 1/20/2026, 2:59 PM

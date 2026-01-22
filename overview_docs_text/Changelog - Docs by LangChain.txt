@@ -1,0 +1,143 @@
+Releases
+Log of updates and improvements to our JavaScript/TypeScript packages
+: Our changelog includes an  that can integrate with , ,
+Discord bots like  or , and other subscription tools.
+Introducing  - a cleaner, library-agnostic way to define graph state that works with any
+-compliant validation library.
+LangGraph now supports , an open specification implemented by Zod 4,
+Valibot, ArkType, and other schema libraries. This means you can use your preferred validation library
+without lock-in:
+Releases
+Changelog - Docs by LangChain https://docs.langchain.com/oss/javascript/releases/changelog
+1 of 10 1/20/2026, 2:56 PM
+New exported type utilities for typing functions outside the graph builder:
+: Define fields with custom reducers for accumulating values. Supports separate
+input and output schemas for type-safe reducer inputs.
+: Define transient state that exists during execution but is never checkpointed -
+useful for database connections, caches, or runtime-only configuration.
+: A prebuilt  for chat messages with the standard messages
+reducer.
+import { z } from "zod"; // or valibot, arktype, etc.
+import { StateSchema, ReducedValue, MessagesValue } from "@langchain/langgraph"
+const AgentState = new StateSchema({
+  messages: MessagesValue,
+  currentStep: z.string(),
+  count: z.number().default(0),
+  history: new ReducedValue(
+    z.array(z.string()).default(() => []),
+    {
+      inputSchema: z.string(),
+      reducer: (current, next) => [...current, next],
+    }
+  ),
+});
+// Type-safe state and update types
+type State = typeof AgentState.State;
+type Update = typeof AgentState.Update;
+const graph = new StateGraph(AgentState)
+  .addNode("agent", (state) => ({ count: state.count + 1 }))
+  .addEdge(START, "agent")
+  .addEdge("agent", END)
+  .compile();
+Releases
+Changelog - Docs by LangChain https://docs.langchain.com/oss/javascript/releases/changelog
+2 of 10 1/20/2026, 2:56 PM
+The existing  and zod-based API continues to work unchanged -  is an
+additional option for those who prefer schema-first definitions.
+ - Type node functions with full inference
+ - Type conditional edge routers
+See the full documentation for defining graph state with StateSchema,
+ReducedValue, and UntrackedValue.
+Use GraphNode and ConditionalEdgeRouter to type functions outside the graph
+builder.
+// Type standalone node functions
+const myNode: GraphNode<typeof AgentState> = (state, config) => {
+  return { count: state.count + 1 };
+};
+// Use schema type helpers directly
+const processState = (state: typeof AgentState.State) => {
+  console.log(state.count);
+};
+Releases
+Changelog - Docs by LangChain https://docs.langchain.com/oss/javascript/releases/changelog
+3 of 10 1/20/2026, 2:56 PM
+Releases
+Changelog - Docs by LangChain https://docs.langchain.com/oss/javascript/releases/changelog
+4 of 10 1/20/2026, 2:56 PM
+: Added ability to manually set  mode when using 
+for structured output.
+ Support for , , , 
+, , , and  tools.
+ New  option on  for detecting and handling
+unsafe content.
+Prefer responses API for GPT�5.2 Pro model.
+ Support for , , , , and
+ tools.
+Exposed  type for improved type safety.
+ Added support for native structured output via
+.
+Support for custom  configuration.
+Jira document loader updated to use v3 API.
+LanceDB� Added  and  support.
+Elasticsearch hybrid search support.
+New .
+Various bug fixes for LlamaCppEmbeddings, PrismaVectorStore, IBM WatsonX, and security
+improvements.
+Releases
+Changelog - Docs by LangChain https://docs.langchain.com/oss/javascript/releases/changelog
+5 of 10 1/20/2026, 2:56 PM
+ Native Live Search support.
+ Added Tavilyʼs research endpoint.
+ New MongoDB LLM cache.
+ Added  option.
+ method support in .
+ Security fixes, better subgraph nesting in Mermaid graphs, UUID7 for run IDs.
+Releases
+Changelog - Docs by LangChain https://docs.langchain.com/oss/javascript/releases/changelog
+6 of 10 1/20/2026, 2:56 PM
+: Chat models now expose supported features and capabilities through a
+ getter. These data are derived from , an open source project providing
+model capability data.
+: New middleware for automatically retrying failed model calls with
+configurable exponential backoff, improving agent reliability.
+: OpenAI content moderation middleware for detecting and
+handling unsafe content in agent interactions. Supports checking user input, model output, and
+tool results.
+: Updated to support flexible trigger points using model profiles for
+context-aware summarization.
+:  support (native structured output) can now be inferred
+from model profiles.
+: Support for passing  instances directly to
+ʼs  parameter and a new  method for extending system
+messages. Enables advanced features like cache control and structured content blocks.
+: Return values from  are
+now purely additive. When returning a  or , they are merged with existing
+system messages rather than replacing them, making it easier to compose multiple middleware
+that modify the prompt.
+ Fixed error handling for Zod v4 validation errors in structured
+output and tool schemas, ensuring detailed error messages are properly displayed.
+Releases
+Changelog - Docs by LangChain https://docs.langchain.com/oss/javascript/releases/changelog
+7 of 10 1/20/2026, 2:56 PM
+Was this page helpful? Yes No
+ or .
+ to Claude, VSCode, and more via MCP for real-time answers.
+If you encounter any issues or have feedback, please  so we can improve. To
+view v0.x documentation, .
+Releases
+Changelog - Docs by LangChain https://docs.langchain.com/oss/javascript/releases/changelog
+8 of 10 1/20/2026, 2:56 PM
+Forum
+Changelog
+LangChain Academy
+Trust Center
+About
+Careers
+Blog
+Powered by
+Releases
+Changelog - Docs by LangChain https://docs.langchain.com/oss/javascript/releases/changelog
+9 of 10 1/20/2026, 2:56 PM
+Releases
+Changelog - Docs by LangChain https://docs.langchain.com/oss/javascript/releases/changelog
+10 of 10 1/20/2026, 2:56 PM

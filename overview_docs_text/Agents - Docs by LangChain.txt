@@ -1,0 +1,428 @@
+Core components
+Agents combine language models with  to create systems that can reason about
+tasks, decide which tools to use, and iteratively work towards solutions.
+ provides a production-ready agent implementation.
+. An agent runs until a stop condition
+is met - i.e., when the model emits a final output or an iteration limit is reached.
+ builds a -based agent runtime using . A graph consists of
+nodes (steps) and edges (connections) that define how your agent processes information.
+The agent moves through this graph, executing nodes like the model node (which calls the
+model), the tools node (which executes tools), or middleware.
+Learn more about the .
+action observation finish
+input
+model
+tools output
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+1 of 29 1/20/2026, 2:57 PM
+The  is the reasoning engine of your agent. It can be specified in multiple ways,
+supporting both static and dynamic model selection.
+Static models are configured once when creating the agent and remain unchanged
+throughout execution. This is the most common and straightforward approach.
+To initialize a static model from a model identifier string:
+Model identifier strings use the format  (e.g. ). You
+may want more control over the model configuration, in which case you can initialize a
+model instance directly using the provider package:
+import { createAgent } from "langchain";
+const agent = createAgent({
+  model: "openai:gpt-5",
+  tools: []
+});
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+2 of 29 1/20/2026, 2:57 PM
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+3 of 29 1/20/2026, 2:57 PM
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+4 of 29 1/20/2026, 2:57 PM
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+5 of 29 1/20/2026, 2:57 PM
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+6 of 29 1/20/2026, 2:57 PM
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+7 of 29 1/20/2026, 2:57 PM
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+8 of 29 1/20/2026, 2:57 PM
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+9 of 29 1/20/2026, 2:57 PM
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+10 of 29 1/20/2026, 2:57 PM
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+11 of 29 1/20/2026, 2:57 PM
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+12 of 29 1/20/2026, 2:57 PM
+import { createAgent } from "langchain";
+import { ChatOpenAI } from "@langchain/openai";
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+13 of 29 1/20/2026, 2:57 PM
+Model instances give you complete control over configuration. Use them when you need
+to set specific parameters like , , , or configure API
+keys, , and other provider-specific settings. Refer to the  to see
+available params and methods on your model.
+Dynamic models are selected at runtime based on the current state and context. This
+enables sophisticated routing logic and cost optimization.
+To use a dynamic model, create middleware with  that modifies the
+model in the request:
+const model = new ChatOpenAI({
+  model: "gpt-4o",
+  temperature: 0.1,
+  maxTokens: 1000,
+  timeout: 30
+});
+const agent = createAgent({
+  model,
+  tools: []
+});
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+14 of 29 1/20/2026, 2:57 PM
+For more details on middleware and advanced patterns, see the 
+.
+For model configuration details, see . For dynamic model selection patterns, see
+.
+Tools give agents the ability to take actions. Agents go beyond simple model-only tool
+binding by facilitating:
+import { ChatOpenAI } from "@langchain/openai";
+import { createAgent, createMiddleware } from "langchain";
+const basicModel = new ChatOpenAI({ model: "gpt-4o-mini" });
+const advancedModel = new ChatOpenAI({ model: "gpt-4o" });
+const dynamicModelSelection = createMiddleware({
+  name: "DynamicModelSelection",
+  wrapModelCall: (request, handler) => {
+    // Choose model based on conversation complexity
+    const messageCount = request.messages.length;
+    return handler({
+        ...request,
+        model: messageCount > 10 ? advancedModel : basicModel,
+    });
+  },
+});
+const agent = createAgent({
+  model: "gpt-4o-mini", // Base model (used when messageCount ≤ 10)
+  tools,
+  middleware: [dynamicModelSelection],
+});
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+15 of 29 1/20/2026, 2:57 PM
+For more information, see .
+Pass a list of tools to the agent.
+Multiple tool calls in sequence (triggered by a single prompt)
+Parallel tool calls when appropriate
+Dynamic tool selection based on previous results
+Tool retry logic and error handling
+State persistence across tool calls
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+16 of 29 1/20/2026, 2:57 PM
+If an empty tool list is provided, the agent will consist of a single LLM node without tool-
+calling capabilities.
+To customize how tool errors are handled, use the  hook in a custom
+middleware:
+import * as z from "zod";
+import { createAgent, tool } from "langchain";
+const search = tool(
+  ({ query }) => `Results for: ${query}`,
+  {
+    name: "search",
+    description: "Search for information",
+    schema: z.object({
+      query: z.string().describe("The query to search for"),
+    }),
+  }
+);
+const getWeather = tool(
+  ({ location }) => `Weather in ${location}: Sunny, 72°F�,
+  {
+    name: "get_weather",
+    description: "Get weather information for a location",
+    schema: z.object({
+      location: z.string().describe("The location to get weather for"),
+    }),
+  }
+);
+const agent = createAgent({
+  model: "gpt-4o",
+  tools: [search, getWeather],
+});
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+17 of 29 1/20/2026, 2:57 PM
+The agent will return a  with the custom error message when a tool fails.
+Agents follow the ReAct (“Reasoning + Acting”) pattern, alternating between brief
+reasoning steps with targeted tool calls and feeding the resulting observations into
+subsequent decisions until they can deliver a final answer.
+ Identify the current most popular wireless headphones and verify
+import { createAgent, createMiddleware, ToolMessage } from "langchain";
+const handleToolErrors = createMiddleware({
+  name: "HandleToolErrors",
+  wrapToolCall: async (request, handler) => {
+    try {
+      return await handler(request);
+    } catch (error) {
+      // Return a custom error message to the model
+      return new ToolMessage({
+        content: `Tool error: Please check your input and try again. 
+(${error})`,
+        tool_call_id: request.toolCall.id!,
+      });
+    }
+  },
+});
+const agent = createAgent({
+  model: "gpt-4o",
+  tools: [
+    /* ... */
+  ],
+  middleware: [handleToolErrors],
+});
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+18 of 29 1/20/2026, 2:57 PM
+availability.
+: “Popularity is time-sensitive, I need to use the provided search
+tool.”
+: Call 
+: “I need to confirm availability for the top-ranked item before
+answering.”
+: Call 
+================================ Human Message =================================
+Find the most popular wireless headphones right now and check if they're in stock
+================================== Ai Message ==================================
+Tool Calls:
+  search_products (call_abc123)
+ Call ID: call_abc123
+  Args:
+    query: wireless headphones
+================================= Tool Message =================================
+Found 5 products matching "wireless headphones". Top 5 results: WH-1000XM5, ...
+================================== Ai Message ==================================
+Tool Calls:
+  check_inventory (call_def456)
+ Call ID: call_def456
+  Args:
+    product_id: WH-1000XM5
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+19 of 29 1/20/2026, 2:57 PM
+To learn more about tools, see .
+You can shape how your agent approaches tasks by providing a prompt. The
+ parameter can be provided as a string:
+When no  is provided, the agent will infer its task from the messages
+directly.
+The  parameter accepts either a  or a . Using a
+: “I have the most popular model and its stock status. I can now
+answer the userʼs question.”
+: Produce final answer
+================================= Tool Message =================================
+Product WH-1000XM5: 10 units in stock
+================================== Ai Message ==================================
+I found wireless headphones (model WH-1000XM5) with 10 units in stock...
+const agent = createAgent({
+  model,
+  tools,
+  systemPrompt: "You are a helpful assistant. Be concise and accurate.",
+});
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+20 of 29 1/20/2026, 2:57 PM
+ gives you more control over the prompt structure, which is useful for
+provider-specific features like :
+The  field with  tells Anthropic to cache that
+content block, reducing latency and costs for repeated requests that use the same
+system prompt.
+For more advanced use cases where you need to modify the system prompt based on
+runtime context or agent state, you can use .
+import { createAgent } from "langchain";
+import { SystemMessage, HumanMessage } from "@langchain/core/messages";
+const literaryAgent = createAgent({
+  model: "anthropic:claude-sonnet-4-5",
+  systemPrompt: new SystemMessage({
+    content: [
+      {
+        type: "text",
+        text: "You are an AI assistant tasked with analyzing literary 
+works.",
+      },
+      {
+        type: "text",
+        text: "<the entire contents of 'Pride and Prejudice'>",
+        cache_control: { type: "ephemeral" }
+      }
+    ]
+  })
+});
+const result = await literaryAgent.invoke({
+  messages: [new HumanMessage("Analyze the major themes in 'Pride and 
+Prejudice'.")]
+});
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+21 of 29 1/20/2026, 2:57 PM
+For more details on message types and formatting, see . For comprehensive
+middleware documentation, see .
+import * as z from "zod";
+import { createAgent, dynamicSystemPromptMiddleware } from "langchain";
+const contextSchema = z.object({
+  userRole: z.enum(["expert", "beginner"]),
+});
+const agent = createAgent({
+  model: "gpt-4o",
+  tools: [/* ... */],
+  contextSchema,
+  middleware: [
+    dynamicSystemPromptMiddleware<z.infer<typeof contextSchema>>((state, 
+runtime) => {
+      const userRole = runtime.context.userRole || "user";
+      const basePrompt = "You are a helpful assistant.";
+      if (userRole === "expert") {
+        return `${basePrompt} Provide detailed technical responses.`;
+      } else if (userRole === "beginner") {
+        return `${basePrompt} Explain concepts simply and avoid jargon.`;
+      }
+      return basePrompt;
+    }),
+  ],
+});
+// The system prompt will be set dynamically based on context
+const result = await agent.invoke(
+  { messages: [{ role: "user", content: "Explain machine learning" }] },
+  { context: { userRole: "expert" } }
+);
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+22 of 29 1/20/2026, 2:57 PM
+You can invoke an agent by passing an update to its . All agents include a 
+ in their state; to invoke the agent, pass a new message:
+For streaming steps and / or tokens from the agent, refer to the  guide.
+Otherwise, the agent follows the LangGraph  and supports all associated
+methods, such as  and .
+In some situations, you may want the agent to return an output in a specific format.
+LangChain provides a simple, universal way to do this with the 
+parameter.
+await agent.invoke({
+  messages: [{ role: "user", content: "What's the weather in San Francisco?" }],
+})
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+23 of 29 1/20/2026, 2:57 PM
+To learn about structured output, see .
+Agents maintain conversation history automatically through the message state. You can
+import * as z from "zod";
+import { createAgent } from "langchain";
+const ContactInfo = z.object({
+  name: z.string(),
+  email: z.string(),
+  phone: z.string(),
+});
+const agent = createAgent({
+  model: "gpt-4o",
+  responseFormat: ContactInfo,
+});
+const result = await agent.invoke({
+  messages: [
+    {
+      role: "user",
+      content: "Extract contact info from: John Doe, john@example.com, (555) 
+123-4567",
+    },
+  ],
+});
+console.log(result.structuredResponse);
+// {
+//   name: 'John Doe',
+//   email: 'john@example.com',
+//   phone: '(555) 123-4567'
+// }
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+24 of 29 1/20/2026, 2:57 PM
+also configure the agent to use a custom state schema to remember additional
+information during the conversation.
+Information stored in the state can be thought of as the  of the agent:
+To learn more about memory, see . For information on implementing long-term
+memory that persists across sessions, see .
+Weʼve seen how the agent can be called with  to get a final response. If the
+agent executes multiple steps, this may take a while. To show intermediate progress, we
+can stream back messages as they occur.
+import { z } from "zod/v4";
+import { StateSchema, MessagesValue } from "@langchain/langgraph";
+import { createAgent } from "langchain";
+const CustomAgentState = new StateSchema({
+  messages: MessagesValue,
+  userPreferences: z.record(z.string(), z.string()),
+});
+const customAgent = createAgent({
+  model: "gpt-4o",
+  tools: [],
+  stateSchema: CustomAgentState,
+});
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+25 of 29 1/20/2026, 2:57 PM
+For more details on streaming, see .
+ provides powerful extensibility for customizing agent behavior at different
+stages of execution. You can use middleware to:
+Process state before the model is called (e.g., message trimming, context injection)
+Modify or validate the modelʼs response (e.g., guardrails, content filtering)
+Handle tool execution errors with custom logic
+Implement dynamic model selection based on state or context
+Add custom logging, monitoring, or analytics
+const stream = await agent.stream(
+  {
+    messages: [{
+      role: "user",
+      content: "Search for AI news and summarize the findings"
+    }],
+  },
+  { streamMode: "values" }
+);
+for await (const chunk of stream) {
+  // Each chunk contains the full state at that point
+  const latestMessage = chunk.messages.at(-1);
+  if (latestMessage?.content) {
+    console.log(`Agent: ${latestMessage.content}`);
+  } else if (latestMessage?.tool_calls) {
+    const toolCallNames = latestMessage.tool_calls.map((tc) => tc.name);
+    console.log(`Calling tools: ${toolCallNames.join(", ")}`);
+  }
+}
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+26 of 29 1/20/2026, 2:57 PM
+Was this page helpful? Yes No
+Middleware integrates seamlessly into the agentʼs execution, allowing you to intercept
+and modify data flow at key points without changing the core agent logic.
+For comprehensive middleware documentation including hooks like ,
+, and , see .
+ or .
+ to Claude, VSCode, and more via MCP for real-time answers.
+Forum
+Changelog
+LangChain Academy
+Trust Center
+About
+Careers
+Blog
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+27 of 29 1/20/2026, 2:57 PM
+Powered by
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+28 of 29 1/20/2026, 2:57 PM
+Core components
+Agents - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/agents
+29 of 29 1/20/2026, 2:57 PM

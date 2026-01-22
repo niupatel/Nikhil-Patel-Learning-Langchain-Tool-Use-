@@ -1,0 +1,33 @@
+Get started
+To install the LangChain package:
+LangChain provides integrations to hundreds of LLMs and thousands of other
+integrations. These live in independent provider packages.
+See the  for a full list of available integrations.
+Now that you have LangChain installed, you can get started by following the 
+.
+npm install langchain @langchain/core
+# Requires Node.js 20+
+# Installing the OpenAI integration
+npm install @langchain/openai
+# Installing the Anthropic integration
+npm install @langchain/anthropic
+Get started
+Install LangChain - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/install
+1 of 3 1/20/2026, 2:50 PM
+Was this page helpful? Yes No
+ or .
+ to Claude, VSCode, and more via MCP for real-time answers.
+Forum
+Changelog
+LangChain Academy
+Trust Center
+About
+Careers
+Blog
+Powered by
+Get started
+Install LangChain - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/install
+2 of 3 1/20/2026, 2:50 PM
+Get started
+Install LangChain - Docs by LangChain https://docs.langchain.com/oss/javascript/langchain/install
+3 of 3 1/20/2026, 2:50 PM
